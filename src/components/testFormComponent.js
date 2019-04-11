@@ -40,8 +40,8 @@ class TestForm extends Component{
         // eslint-disable-next-line array-callback-return
         //alert(JSON.stringify(message))
         axios
-        .post("https://localhost:3443/tests/",message,{ headers: { Authorization: `Bearer ${token}` }})
-        .then(res => alert(res.data.status))
+        .post("https://safe-tundra-92105.herokuapp.com/tests/",message,{ headers: { Authorization: `Bearer ${token}` }})
+        .then(res => console.log(res))
         .catch(err => alert(JSON.stringify(err.response)));
         document.getElementById("form").reset();
         this.setState({

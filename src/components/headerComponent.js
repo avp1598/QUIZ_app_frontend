@@ -12,8 +12,8 @@ class Header extends Component {
                     <div className="container">
                         <div className="row row-header">
                             <div className="col-12 col-sm-6">
-                                <h1>A la Authenticate </h1>
-                                <p>We Authenticate your credentials!</p>
+                                <h1>The Quiz App </h1>
+                                <p>Add quizes and take quizes with secure authentication</p>
                             </div>
                         </div>
                     </div>

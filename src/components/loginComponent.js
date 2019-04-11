@@ -27,7 +27,7 @@ export default class Login extends Component {
             "password":this.l_password.value
         }
         axios
-        .post("https://localhost:3443/users/login",message)
+        .post("https://safe-tundra-92105.herokuapp.com/users/login",message)
         .then(res => {
             localStorage.setItem("token",res.data.token);
             localStorage.setItem("user",this.l_username.value);
@@ -35,7 +35,7 @@ export default class Login extends Component {
                 isauthenticated: true
               }));
         })
-        .catch(err => alert("Wrong username/password"));
+        .catch(err => alert(JSON.stringify(err)));
 
     }
     handleRegister(event){
@@ -46,10 +46,9 @@ export default class Login extends Component {
             "mail":this.mail.value
         }
         axios
-        .post("https://localhost:3443/users/signup",message)
+        .post("https://safe-tundra-92105.herokuapp.com/users/signup",message)
         .then(res => alert(res.data.status))
         .catch(err => alert(err.response.data.err.message));
-
         this.setState(() => ({
             redirect: true
           }));

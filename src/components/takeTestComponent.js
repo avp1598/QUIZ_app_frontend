@@ -24,7 +24,7 @@ class TakeTest extends Component{
     onLoadTest(){
         const token=localStorage.getItem("token");
         axios
-        .get(`https://localhost:3443/tests/${this.props.testid}`,{ headers: { Authorization: `Bearer ${token}` } })
+        .get(`https://safe-tundra-92105.herokuapp.com/tests/${this.props.testid}`,{ headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
             this.setState({
                 test:res.data[0].questions,

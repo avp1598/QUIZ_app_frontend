@@ -22,7 +22,7 @@ class User extends Component {
         const token=localStorage.getItem("token");
         //alert(token);
         axios
-        .get(`https://localhost:3443/users/${this.props.user}`,{ headers: { Authorization: `Bearer ${token}` } })
+        .get(`https://safe-tundra-92105.herokuapp.com/users/${this.props.user}`,{ headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
             if (this._isMounted){
             this.setState(() => ({

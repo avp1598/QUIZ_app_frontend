@@ -76,7 +76,7 @@ class Test extends Component{
         event.preventDefault();
         const token=localStorage.getItem("token");
         axios
-        .get(`https://localhost:3443/tests`,{ headers: { Authorization: `Bearer ${token}` } })
+        .get(`https://safe-tundra-92105.herokuapp.com/tests`,{ headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
             alert(JSON.stringify(res.data))
         })
