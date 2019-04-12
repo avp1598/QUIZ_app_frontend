@@ -43,7 +43,7 @@ class TestForm extends Component{
         //alert(JSON.stringify(message))
         axios
         .post(`${url}/tests/`,message,{ headers: { Authorization: `Bearer ${token}` }})
-        .then(res => console.log(res))
+        .then(res => alert("Test added successfully"))
         .catch(err => alert(JSON.stringify(err.response)));
         document.getElementById("form").reset();
         this.setState({

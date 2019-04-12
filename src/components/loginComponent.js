@@ -50,11 +50,10 @@ export default class Login extends Component {
             "teacher":this.isTeacher.checked
             //"teacher":this.isTeacher.value
         }
-        alert(JSON.stringify(message))
         axios
         .post(`${url}/users/signup`,message)
         .then(res => alert(res.data.status))
-        .catch(err => alert(JSON.stringify(err)));
+        .catch(err => alert(JSON.stringify(err.response.data.err.message)));
         this.setState(() => ({
             redirect: true
           }));
