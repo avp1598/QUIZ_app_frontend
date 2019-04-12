@@ -1,7 +1,7 @@
 // frontend/src/components/Modal.js
 
 import React, { Component } from "react";
-import {Button,Form,FormGroup,Input,Label,CustomInput} from "reactstrap";
+import {Button,Form,FormGroup,Input,Label} from "reactstrap";
 import {Redirect} from 'react-router-dom';
 import axios from "axios";
 import config from "../shared/config";
@@ -24,7 +24,6 @@ export default class Login extends Component {
 
     handleLogin(event) {
         event.preventDefault();
-
         var message={
             "username":this.l_username.value,
             "password":this.l_password.value
@@ -101,8 +100,8 @@ export default class Login extends Component {
                         <Input type="password" name="password" id="password" placeholder="Enter password"  innerRef={(input) => this.password = input}/>
                         </FormGroup>
                         <FormGroup>
-                        <Label for="teacher">IsTeacher</Label>
-                        <CustomInput type="switch" name="isT" innerRef={(input) => this.isTeacher = input}/>
+                        <Input type="checkbox" name="isT" innerRef={(input) => this.isTeacher = input}/>
+                        <Label for="isT">IsTeacher</Label>
                         </FormGroup>
                         <Button variant="primary" type="submit">
                         Register
