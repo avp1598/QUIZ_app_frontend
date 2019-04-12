@@ -4,6 +4,9 @@ import axios from 'axios';
 import {Button} from "reactstrap";
 import Test from './testComponent';
 import TestForm from './testFormComponent';
+import config from '../shared/config';
+import Student from './studentComponent';
+const url=config["server-api"];
 
 class User extends Component {
     _isMounted = false;
@@ -12,7 +15,8 @@ class User extends Component {
         super(props)
 
         this.state={
-            isAuthenticated:null
+            isAuthenticated:null,
+            user:null
         }
         this.logout=this.logout.bind(this);
     }
@@ -22,11 +26,12 @@ class User extends Component {
         const token=localStorage.getItem("token");
         //alert(token);
         axios
-        .get(`https://safe-tundra-92105.herokuapp.com/users/${this.props.user}`,{ headers: { Authorization: `Bearer ${token}` } })
+        .get(`${url}/users/${this.props.user}`,{ headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
             if (this._isMounted){
             this.setState(() => ({
-                isAuthenticated:1
+                isAuthenticated:1,
+                user:res.data[0]
               }));
             }
         })
@@ -56,11 +61,11 @@ class User extends Component {
             <div className ="row">
                 <div className="col-sm-6">
                     Hello {this.props.user}<br/>
-                    <Test/>
+                    {this.state.user ? this.state.user.teacher ? <Test/>:<Student/> : null}
                     <Button outline color="danger" onClick={this.logout}>Log-out</Button>
                 </div>
                 <div className="col-sm-6">
-                    <TestForm/>
+                    {this.state.user ? this.state.user.teacher ? <TestForm/>:<div></div> : null}
                 </div>
             </div>
         );

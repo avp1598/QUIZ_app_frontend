@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Button,Form,FormGroup,Label,Input} from "reactstrap";
 import {Fade, Stagger } from 'react-animation-components';
-import {Redirect} from 'react-router-dom';
+import config from '../shared/config';
+const url=config["server-api"];
 
 
 function RenderAnswer({answer}){
@@ -64,11 +65,11 @@ class Test extends Component{
         super(props)
 
         this.state={
-            redirect:false,
-            testnum:null
+            data:null,
+            viewOn:false
         }
         this.view=this.view.bind(this);
-        this.giveTest= this.giveTest.bind(this);
+        this.viewTest= this.viewTest.bind(this);
     }
     
 
@@ -76,7 +77,7 @@ class Test extends Component{
         event.preventDefault();
         const token=localStorage.getItem("token");
         axios
-        .get(`https://safe-tundra-92105.herokuapp.com/tests`,{ headers: { Authorization: `Bearer ${token}` } })
+        .get(`${url}/tests/`,{ headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
             alert(JSON.stringify(res.data))
         })
@@ -84,12 +85,11 @@ class Test extends Component{
             alert(JSON.stringify(err))
         });
     }
-    giveTest(event){
+    viewTest(event){
         event.preventDefault();
-        /*
         const token=localStorage.getItem("token");
         axios
-        .get(`https://localhost:3443/tests/${this.test_num.value}`,{ headers: { Authorization: `Bearer ${token}` } })
+        .get(`${url}/tests/${this.test_num.value}`,{ headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
             //alert(JSON.stringify(res.data))
             this.setState(() => ({
@@ -98,28 +98,13 @@ class Test extends Component{
               }));
         })
         .catch(err => {
-            alert("ERRROR",JSON.stringify(err))
-        });
-        */
-        this.setState({
-            redirect:true,
-            testnum:this.test_num.value
-        })
-       
+            alert(JSON.stringify(err))
+        });  
     }
 
     render(){
-        let url = window.location.pathname;
-        if(this.state.redirect){
-            return(
-                <Redirect to={`${url}/${this.state.testnum}`}/>
-            )
-        }
-        
         const Test=(test)=>{
             if(this.state.viewOn){
-                //alert(JSON.stringify(test.test.data))
-                //console.log(JSON.stringify(test.test.data[0]))
                 return(
                     <div>
                         <h1>{test.test.data[0].description}</h1>
@@ -136,14 +121,14 @@ class Test extends Component{
         }
         return(
             <div>
-                <Form onSubmit={this.giveTest}>
+                <Form onSubmit={this.viewTest}>
                     <FormGroup>
-                        <Label for="exampleEmail">Test Number</Label>
+                        <Label for="testnum">Test Number</Label>
                         <Input type="number" name="testnumber" id="testNumber" placeholder="Test number" 
                             innerRef={(input) => this.test_num = input} />
                     </FormGroup>
                     <br/>
-                    <Button outline color="info">Give Test</Button>
+                    <Button outline color="info">View Test</Button>
                 </Form>
                 <Test test={this.state.data} />
                 <br/>

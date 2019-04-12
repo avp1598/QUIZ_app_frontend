@@ -1,9 +1,12 @@
 // frontend/src/components/Modal.js
 
 import React, { Component } from "react";
-import {Button,Form,FormGroup,Input,Label} from "reactstrap";
+import {Button,Form,FormGroup,Input,Label,CustomInput} from "reactstrap";
 import {Redirect} from 'react-router-dom';
 import axios from "axios";
+import config from "../shared/config";
+
+const url=config["server-api"];
 
 export default class Login extends Component {
 
@@ -27,7 +30,7 @@ export default class Login extends Component {
             "password":this.l_password.value
         }
         axios
-        .post("https://safe-tundra-92105.herokuapp.com/users/login",message)
+        .post(`${url}/users/login`,message)
         .then(res => {
             localStorage.setItem("token",res.data.token);
             localStorage.setItem("user",this.l_username.value);
@@ -35,7 +38,7 @@ export default class Login extends Component {
                 isauthenticated: true
               }));
         })
-        .catch(err => alert(JSON.stringify(err)));
+        .catch(err => alert("Username/password wrong or server error"));
 
     }
     handleRegister(event){
@@ -43,16 +46,18 @@ export default class Login extends Component {
         var message={
             "username":this.username.value,
             "password":this.password.value,
-            "mail":this.mail.value
+            "mail":this.mail.value,
+            "teacher":this.isTeacher.checked
+            //"teacher":this.isTeacher.value
         }
+        alert(JSON.stringify(message))
         axios
-        .post("https://safe-tundra-92105.herokuapp.com/users/signup",message)
+        .post(`${url}/users/signup`,message)
         .then(res => alert(res.data.status))
-        .catch(err => alert(err.response.data.err.message));
+        .catch(err => alert(JSON.stringify(err)));
         this.setState(() => ({
             redirect: true
           }));
-
     }
     
 
@@ -95,6 +100,10 @@ export default class Login extends Component {
                         <FormGroup>
                         <Label for="password">password</Label>
                         <Input type="password" name="password" id="password" placeholder="Enter password"  innerRef={(input) => this.password = input}/>
+                        </FormGroup>
+                        <FormGroup>
+                        <Label for="teacher">IsTeacher</Label>
+                        <CustomInput type="switch" name="isT" innerRef={(input) => this.isTeacher = input}/>
                         </FormGroup>
                         <Button variant="primary" type="submit">
                         Register

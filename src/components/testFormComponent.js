@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Button,Form,FormGroup,Label,Input,CustomInput} from "reactstrap";
+import config from '../shared/config';
+const url=config["server-api"];
 
 class TestForm extends Component{
 
@@ -40,7 +42,7 @@ class TestForm extends Component{
         // eslint-disable-next-line array-callback-return
         //alert(JSON.stringify(message))
         axios
-        .post("https://safe-tundra-92105.herokuapp.com/tests/",message,{ headers: { Authorization: `Bearer ${token}` }})
+        .post(`${url}/tests/`,message,{ headers: { Authorization: `Bearer ${token}` }})
         .then(res => console.log(res))
         .catch(err => alert(JSON.stringify(err.response)));
         document.getElementById("form").reset();
